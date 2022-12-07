@@ -32,7 +32,7 @@ jobs:
       with:
         repository: libjxl/conformance
         # TODO(eustas): move ref to a global variable / file?
-        ref: 43d8135b50e53167ee6fee0b842b9eb15cfc4aa2
+        ref: 5399ecf01e50ec5230912aa2df82286dc1c379c9
         path: conformance
     - name: Cache
       uses: actions/cache@v2
@@ -123,7 +123,8 @@ jobs:
         ./ci.sh ${{ matrix.build_type || 'release' }} -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-          -DBUILD_TESTING=OFF
+          -DBUILD_TESTING=OFF \
+          -DJPEGXL_ENABLE_JPEGLI=OFF
         # Flatten the artifacts directory structure
         cp tools/conformance/conformance.py build/tools/conformance
         cp tools/conformance/lcms2.py build/tools/conformance
@@ -161,7 +162,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: libjxl/conformance
-        ref: 43d8135b50e53167ee6fee0b842b9eb15cfc4aa2
+        ref: 5399ecf01e50ec5230912aa2df82286dc1c379c9
         path: conformance
     - name: Cache
       uses: actions/cache@v2

@@ -100,6 +100,8 @@ set(JPEGXL_ENABLE_DEVTOOLS false CACHE BOOL
     "Build JPEGXL developer tools.")
 set(JPEGXL_ENABLE_TOOLS true CACHE BOOL
     "Build JPEGXL user tools: cjxl and djxl.")
+set(JPEGXL_ENABLE_JPEGLI true CACHE BOOL
+    "Build jpegli shared library.")
 set(JPEGXL_ENABLE_DOXYGEN true CACHE BOOL
     "Generate C API documentation using Doxygen.")
 set(JPEGXL_ENABLE_MANPAGES true CACHE BOOL
@@ -135,6 +137,10 @@ set(JPEGXL_ENABLE_SIZELESS_VECTORS false CACHE BOOL
 set(JPEGXL_ENABLE_TRANSCODE_JPEG true CACHE BOOL
     "Builds in support for decoding transcoded JXL files back to JPEG,\
  disabling it makes the decoder reject JXL_DEC_JPEG_RECONSTRUCTION events,\
+ (default enabled)")
+set(JPEGXL_ENABLE_BOXES true CACHE BOOL
+    "Builds in support for decoding boxes in JXL files,\
+ disabling it makes the decoder reject JXL_DEC_BOX events,\
  (default enabled)")
 set(JPEGXL_STATIC false CACHE BOOL
     "Build tools as static binaries.")

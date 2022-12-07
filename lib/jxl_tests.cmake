@@ -5,6 +5,7 @@ set(TEST_FILES
   extras/codec_test.cc
   extras/dec/color_description_test.cc
   extras/dec/pgx_test.cc
+  extras/decode_jpeg_test.cc
   jxl/ac_strategy_test.cc
   jxl/alpha_test.cc
   jxl/ans_common_test.cc
@@ -107,7 +108,7 @@ foreach (TESTFILE IN LISTS TEST_FILES)
     set_target_properties(${TESTNAME} PROPERTIES LINK_FLAGS "\
       -O1 \
       -s USE_LIBPNG=1 \
-      -s TOTAL_MEMORY=1536MB \
+      -s INITIAL_MEMORY=1536MB \
       -s SINGLE_FILE=1 \
       -s PROXY_TO_PTHREAD \
       -s EXIT_RUNTIME=1 \

@@ -50,6 +50,12 @@
 #define JXL_TRANSCODE_JPEG_TEST(X) DISABLED_##X
 #endif  // JPEGXL_ENABLE_TRANSCODE_JPEG
 
+#if JPEGXL_ENABLE_BOXES
+#define JXL_BOXES_TEST(X) X
+#else
+#define JXL_BOXES_TEST(X) DISABLED_##X
+#endif  // JPEGXL_ENABLE_BOXES
+
 #ifdef THREAD_SANITIZER
 #define JXL_TSAN_SLOW_TEST(X) DISABLED_##X
 #else
@@ -303,7 +309,7 @@ jxl::CodecInOut SomeTestImageToCodecInOut(const std::vector<uint8_t>& buf,
   EXPECT_TRUE(ConvertFromExternal(
       jxl::Span<const uint8_t>(buf.data(), buf.size()), xsize, ysize,
       jxl::ColorEncoding::SRGB(/*is_gray=*/num_channels < 3),
-      /*alpha_is_premultiplied=*/false, /*bits_per_sample=*/16, format,
+      /*bits_per_sample=*/16, format,
       /*pool=*/nullptr,
       /*ib=*/&io.Main()));
   return io;

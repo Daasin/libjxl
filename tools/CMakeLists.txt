@@ -141,8 +141,12 @@ if(JPEGXL_ENABLE_TOOLS)
   )
   list(APPEND TOOL_BINARIES djxl)
 
-  add_executable(cjpeg_hdr cjpeg_hdr.cc)
-  list(APPEND INTERNAL_TOOL_BINARIES cjpeg_hdr)
+  find_package(JPEG)
+  if(JPEG_FOUND)
+    # Depends on parts of jxl_extras that are only built if libjpeg is found.
+    add_executable(cjpeg_hdr cjpeg_hdr.cc)
+    list(APPEND INTERNAL_TOOL_BINARIES cjpeg_hdr)
+  endif()
 
   add_executable(jxlinfo jxlinfo.c)
   target_link_libraries(jxlinfo jxl)
@@ -376,35 +380,7 @@ endif()
 
 add_subdirectory(box)
 add_subdirectory(conformance)
-
-
-if (JPEGXL_ENABLE_TOOLS AND JPEGXL_EMSCRIPTEN)
-# WASM API facade.
-add_executable(jxl_emcc jxl_emcc.cc)
-target_link_libraries(jxl_emcc
-    jxl_extras-static
-)
-set_target_properties(jxl_emcc PROPERTIES LINK_FLAGS "\
-  -O3\
-  --closure 1 \
-  -s TOTAL_MEMORY=75mb \
-  -s USE_LIBPNG=1 \
-  -s DISABLE_EXCEPTION_CATCHING=1 \
-  -s MODULARIZE=1 \
-  -s FILESYSTEM=0 \
-  -s USE_PTHREADS=1 \
-  -s PTHREAD_POOL_SIZE=4 \
-  -s EXPORT_NAME=\"JxlCodecModule\"\
-  -s \"EXPORTED_FUNCTIONS=[\
-    _malloc,\
-    _free,\
-    _jxlCreateInstance,\
-    _jxlDestroyInstance,\
-    _jxlFlush,\
-    _jxlProcessInput\
-  ]\"\
-")
-endif ()  # JPEGXL_ENABLE_TOOLS AND JPEGXL_EMSCRIPTEN
+add_subdirectory(wasm_demo)
 
 if(JPEGXL_ENABLE_JNI)
 find_package(JNI QUIET)
